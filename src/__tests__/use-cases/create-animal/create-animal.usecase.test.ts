@@ -8,15 +8,6 @@ vi.mock("../../../infra/repositories/animal.repository.memory", () => {
   function AnimalRepositoryMemoryFixture() {
     return {
       async save(_: Animal): Promise<void> {},
-
-      async findAll(): Promise<Readonly<Animal[]>> {
-        const animals: Animal[] = [];
-        return Object.freeze(animals);
-      },
-
-      async findById(_: string): Promise<Readonly<Animal | null>> {
-        return Object.freeze(null);
-      },
     };
   }
 
@@ -30,7 +21,6 @@ vi.mock("../../../infra/repositories/animal.repository.memory", () => {
 describe("Create animal use case", () => {
   it("should create an animal and return its id", async () => {
     const animalGateway = AnimalRepositoryMemory.create();
-    console.log(animalGateway);
     const spy = vi.spyOn(animalGateway, "save");
     const instance = CreateAnimalUseCase.create(animalGateway);
     const output = await instance.execute(createAnimalInputDtoFixture);
