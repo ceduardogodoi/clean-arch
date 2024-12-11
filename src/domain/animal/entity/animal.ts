@@ -7,17 +7,54 @@ export type CreateAnimalData = {
   observations?: string;
 };
 
+export type WithAnimalData = {
+  id: string;
+  isAdopted: boolean;
+  name?: string;
+  age?: number;
+  history?: string;
+  observations?: string;
+};
+
 export class Animal {
   private constructor(
-    readonly id: string,
-    readonly isAdopted: boolean,
-    readonly name?: string,
-    readonly age?: number,
-    readonly history?: string,
-    readonly observations?: string
+    private _id: string,
+    private _isAdopted: boolean,
+    private _name?: string,
+    private _age?: number,
+    private _history?: string,
+    private _observations?: string
   ) {}
 
-  public static create(data: CreateAnimalData): Readonly<Animal> {
+  public get id(): string {
+    return this._id;
+  }
+
+  public get isAdopted(): boolean {
+    return this._isAdopted;
+  }
+
+  public get name(): string | undefined {
+    return this._name;
+  }
+
+  public get age(): number | undefined {
+    return this._age;
+  }
+
+  public get history(): string | undefined {
+    return this._history;
+  }
+
+  public get observations(): string | undefined {
+    return this._observations;
+  }
+
+  public markAsAdopted(): void {
+    this._isAdopted = true;
+  }
+
+  public static create(data: CreateAnimalData): Animal {
     const animal = new Animal(
       crypto.randomUUID(),
       false,
@@ -27,10 +64,10 @@ export class Animal {
       data.observations
     );
 
-    return Object.freeze(animal);
+    return animal;
   }
 
-  public static with(data: Animal): Readonly<Animal> {
+  public static with(data: WithAnimalData): Animal {
     const animal = new Animal(
       data.id,
       data.isAdopted,
@@ -40,6 +77,6 @@ export class Animal {
       data.observations
     );
 
-    return Object.freeze(animal);
+    return animal;
   }
 }

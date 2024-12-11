@@ -19,7 +19,7 @@ describe("Find animal by id use case", () => {
     });
 
     const output = await instance.execute({ id: "inexistent_id" });
-    expect(output.animal).toBeNull();
+    expect(output).toBeNull();
   });
 
   it("should find an animal when id exists", async () => {
@@ -34,7 +34,7 @@ describe("Find animal by id use case", () => {
     const output = await instance.execute({
       id: animalFixture.id,
     });
-    expect(output.animal).not.toBeNull();
-    expect(output.animal).toHaveProperty("id", animalFixture.id);
+    expect(output).not.toBeNull();
+    expect(output).toHaveProperty("id", animalFixture.id);
   });
 });

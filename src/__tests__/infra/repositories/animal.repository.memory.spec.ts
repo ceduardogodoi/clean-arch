@@ -17,7 +17,7 @@ describe("Animal in memory repository", () => {
     expect(animals).toHaveLength(1);
     expect(animals).toContainEqual(
       expect.objectContaining({
-        id: animal.id,
+        _id: animal.id,
       })
     );
   });

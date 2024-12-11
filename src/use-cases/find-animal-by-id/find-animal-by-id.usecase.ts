@@ -2,13 +2,11 @@ import { Animal } from "../../domain/animal/entity/animal";
 import { AnimalGateway } from "../../domain/animal/gateway/animal.gateway";
 import { UseCase } from "../use-case";
 
-export type FindAnimalByIdInputDto = {
+export type FindAnimalByIdInputDto = Readonly<{
   id: string;
-};
-
-export type FindAnimalByIdOuputDto = Readonly<{
-  animal: Animal | null;
 }>;
+
+export type FindAnimalByIdOuputDto = Readonly<Animal | null>;
 
 export class FindAnimalByIdUseCase
   implements UseCase<FindAnimalByIdInputDto, FindAnimalByIdOuputDto>
@@ -24,18 +22,7 @@ export class FindAnimalByIdUseCase
   async execute(
     input: FindAnimalByIdInputDto
   ): Promise<FindAnimalByIdOuputDto> {
-    const animal = await this.animalGateway.findById(input.id);
-    const output = this.presentOutput(animal);
+    const output = await this.animalGateway.findById(input.id);
     return output;
-  }
-
-  private presentOutput(
-    animal: Readonly<Animal | null>
-  ): FindAnimalByIdOuputDto {
-    const output: FindAnimalByIdOuputDto = {
-      animal,
-    };
-
-    return Object.freeze(output);
   }
 }

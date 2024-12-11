@@ -6,4 +6,6 @@ export interface AnimalGateway {
   findAll(): Promise<Readonly<Animal[]>>;
 
   findById(id: string): Promise<Readonly<Animal | null>>;
+
+  markAnimalAsAdopted(id: string): Promise<Animal | null>;
 }
