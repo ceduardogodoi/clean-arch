@@ -2,7 +2,7 @@ import { describe, it, expect, vi, afterEach } from "vitest";
 import { FindAllAnimalsUseCase } from "../../../use-cases/find-all-animals/find-all-animals.usecase";
 import { AnimalRepositoryMemory } from "../../../infra/repositories/animal.repository.memory";
 import { Animal } from "../../../domain/animal/entity/animal";
-import { animalFixture } from "../../_fixtures/animal";
+import { animalFixture, createAnimalFixture } from "../../_fixtures/animal";
 
 describe("Find all animals use case", () => {
   afterEach(() => {
@@ -38,20 +38,28 @@ describe("Find all animals use case", () => {
 
     const instance = FindAllAnimalsUseCase.create(animalGateway);
     const output = await instance.execute();
-    expect(output.animals).toHaveLength(QUANTITY_TO_SAVE);
+    expect(output).toHaveLength(QUANTITY_TO_SAVE);
     expect(spy).toHaveBeenCalled();
   });
 
   it("should find all animals and return an them in the array", async () => {
     const animalGateway = AnimalRepositoryMemory.create();
 
-    const QUANTITY_TO_SAVE = 3;
+    const QUANTITY_TO_SAVE = 2;
     Array.from({ length: QUANTITY_TO_SAVE }).forEach(async () => {
-      await animalGateway.save(animalFixture);
+      const animal = Animal.create(createAnimalFixture);
+      await animalGateway.save(animal);
     });
+
+    await animalGateway.save(animalFixture);
 
     const instance = FindAllAnimalsUseCase.create(animalGateway);
     const output = await instance.execute();
-    expect(output.animals).toHaveLength(QUANTITY_TO_SAVE);
+    expect(output).toHaveLength(3);
+    expect(output).toContainEqual(
+      expect.objectContaining({
+        id: animalFixture.id,
+      })
+    );
   });
 });

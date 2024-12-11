@@ -3,9 +3,9 @@ import { Animal } from "../entity/animal";
 export interface AnimalGateway {
   save(animal: Animal): Promise<void>;
 
-  findAll(): Promise<Readonly<Animal[]>>;
+  findAll(): Promise<Animal[]>;
 
-  findById(id: string): Promise<Readonly<Animal | null>>;
+  findById(id: string): Promise<Animal | null>;
 
   markAnimalAsAdopted(id: string): Promise<Animal | null>;
 }

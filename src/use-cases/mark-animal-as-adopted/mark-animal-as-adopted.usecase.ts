@@ -14,9 +14,9 @@ export class MarkAnimalAsAdoptedUseCase
   private constructor(private readonly animalGateway: AnimalGateway) {}
 
   public static create(
-    animalGateway: Readonly<AnimalGateway>
-  ): Readonly<MarkAnimalAsAdoptedUseCase> {
-    return Object.freeze(new MarkAnimalAsAdoptedUseCase(animalGateway));
+    animalGateway: AnimalGateway
+  ): MarkAnimalAsAdoptedUseCase {
+    return new MarkAnimalAsAdoptedUseCase(animalGateway);
   }
 
   public async execute(

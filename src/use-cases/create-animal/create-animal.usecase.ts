@@ -18,13 +18,13 @@ export class CreateAnimalUseCase
 {
   private constructor(private readonly animalGateway: AnimalGateway) {}
 
-  public static create(
-    animalGateway: Readonly<AnimalGateway>
-  ): Readonly<CreateAnimalUseCase> {
-    return Object.freeze(new CreateAnimalUseCase(animalGateway));
+  public static create(animalGateway: AnimalGateway): CreateAnimalUseCase {
+    return new CreateAnimalUseCase(animalGateway);
   }
 
-  public async execute(input: CreateAnimalInputDto): Promise<CreateAnimalOutputDto> {
+  public async execute(
+    input: CreateAnimalInputDto
+  ): Promise<CreateAnimalOutputDto> {
     const animal = Animal.create({
       name: input.name,
       age: input.age,

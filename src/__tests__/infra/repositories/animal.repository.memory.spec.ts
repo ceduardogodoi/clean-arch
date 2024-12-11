@@ -4,7 +4,7 @@ import { Animal } from "../../../domain/animal/entity/animal";
 import { animalFixture, createAnimalFixture } from "../../_fixtures/animal";
 
 describe("Animal in memory repository", () => {
-  let instance: Readonly<AnimalRepositoryMemory>;
+  let instance: AnimalRepositoryMemory;
   beforeEach(() => {
     instance = AnimalRepositoryMemory.create();
   });
@@ -17,7 +17,7 @@ describe("Animal in memory repository", () => {
     expect(animals).toHaveLength(1);
     expect(animals).toContainEqual(
       expect.objectContaining({
-        _id: animal.id,
+        id: animal.id,
       })
     );
   });

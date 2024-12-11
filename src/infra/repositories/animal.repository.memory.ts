@@ -6,24 +6,21 @@ export class AnimalRepositoryMemory implements AnimalGateway {
 
   private constructor() {}
 
-  public static create(): Readonly<AnimalRepositoryMemory> {
-    return Object.freeze(new AnimalRepositoryMemory());
+  public static create(): AnimalRepositoryMemory {
+    return new AnimalRepositoryMemory();
   }
 
   public async save(animal: Animal): Promise<void> {
     this.#animals.push(animal);
   }
 
-  public async findAll(): Promise<Readonly<Animal[]>> {
-    const animalsClone = structuredClone(this.#animals);
-    const animals = Object.freeze(animalsClone);
-    return animals;
+  public async findAll(): Promise<Animal[]> {
+    return this.#animals;
   }
 
-  public async findById(id: string): Promise<Readonly<Animal | null>> {
+  public async findById(id: string): Promise<Animal | null> {
     const animal = this.#animals.find((_animal) => _animal.id === id) ?? null;
-    const animalFrozen = Object.freeze(animal);
-    return animalFrozen;
+    return animal;
   }
 
   async markAnimalAsAdopted(id: string): Promise<Animal | null> {

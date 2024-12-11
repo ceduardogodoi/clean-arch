@@ -24,7 +24,7 @@ async function main(): Promise<void> {
 
   const findAllAnimalsUseCase = FindAllAnimalsUseCase.create(animalRepository);
   const findAllAnimalsUseCaseResult = await findAllAnimalsUseCase.execute();
-  console.log("findAll::", findAllAnimalsUseCaseResult.animals);
+  console.log("findAll::", findAllAnimalsUseCaseResult);
 
   const findAnimalByIdUseCase = FindAnimalByIdUseCase.create(animalRepository);
   const findAnimalByIdUseCaseResult = await findAnimalByIdUseCase.execute({

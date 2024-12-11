@@ -5,8 +5,8 @@ import { animalFixture, createAnimalFixture } from "../../_fixtures/animal";
 import { Animal } from "../../../domain/animal/entity/animal";
 
 describe("Find animal by id use case", () => {
-  let animalGateway: Readonly<AnimalRepositoryMemory>;
-  let instance: Readonly<FindAnimalByIdUseCase>;
+  let animalGateway: AnimalRepositoryMemory;
+  let instance: FindAnimalByIdUseCase;
   beforeEach(() => {
     animalGateway = AnimalRepositoryMemory.create();
     instance = FindAnimalByIdUseCase.create(animalGateway);
@@ -15,7 +15,8 @@ describe("Find animal by id use case", () => {
   it("should not find any animals when id does not exist", async () => {
     const QUANTITY_TO_SAVE = 3;
     Array.from({ length: QUANTITY_TO_SAVE }).forEach(async () => {
-      await animalGateway.save(animalFixture);
+      const animal = Animal.create(createAnimalFixture);
+      await animalGateway.save(animal);
     });
 
     const output = await instance.execute({ id: "inexistent_id" });
