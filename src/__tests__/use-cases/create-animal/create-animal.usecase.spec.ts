@@ -1,13 +1,13 @@
 import { describe, it, expect, vi } from "vitest";
 import { CreateAnimalUseCase } from "../../../use-cases/create-animal/create-animal.usecase";
 import { AnimalRepositoryMemory } from "../../../infra/repositories/animal.repository.memory";
-import { createAnimalInputDtoFixture } from "../../fixtures/animal";
+import { createAnimalInputDtoFixture } from "../../_fixtures/animal";
 import { Animal } from "../../../domain/animal/entity/animal";
 
 vi.mock("../../../infra/repositories/animal.repository.memory", () => {
-  function AnimalRepositoryMemoryFixture() {
+  function AnimalRepositoryMemoryFixture(): Partial<AnimalRepositoryMemory> {
     return {
-      async save(_: Animal): Promise<void> {},
+      save: vi.fn().mockResolvedValue(undefined),
     };
   }
 
@@ -25,7 +25,12 @@ describe("Create animal use case", () => {
     const instance = CreateAnimalUseCase.create(animalGateway);
     const output = await instance.execute(createAnimalInputDtoFixture);
 
-    expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        id: output.id,
+      })
+    );
+
     expect(output).toEqual({
       id: output.id,
     });

@@ -2,21 +2,23 @@ import { Animal } from "../../domain/animal/entity/animal";
 import { AnimalGateway } from "../../domain/animal/gateway/animal.gateway";
 import { UseCase } from "../use-case";
 
-type FindAnimalByIdInputDto = {
+export type FindAnimalByIdInputDto = {
   id: string;
 };
 
-type FindAnimalByIdOuputDto = {
+export type FindAnimalByIdOuputDto = Readonly<{
   animal: Animal | null;
-};
+}>;
 
 export class FindAnimalByIdUseCase
   implements UseCase<FindAnimalByIdInputDto, FindAnimalByIdOuputDto>
 {
   private constructor(private readonly animalGateway: AnimalGateway) {}
 
-  public static create(animalGateway: AnimalGateway): FindAnimalByIdUseCase {
-    return new FindAnimalByIdUseCase(animalGateway);
+  public static create(
+    animalGateway: AnimalGateway
+  ): Readonly<FindAnimalByIdUseCase> {
+    return Object.freeze(new FindAnimalByIdUseCase(animalGateway));
   }
 
   async execute(
@@ -34,6 +36,6 @@ export class FindAnimalByIdUseCase
       animal,
     };
 
-    return output;
+    return Object.freeze(output);
   }
 }

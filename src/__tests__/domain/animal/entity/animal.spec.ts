@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { Animal } from "../../../../domain/animal/entity/animal";
-import { animalFixture, createAnimalFixture } from "../../../fixtures/animal";
+import { createAnimalFixture, animalFixture } from "../../../_fixtures/animal";
 
 describe("Animal entity", () => {
   it("should create a new animal", () => {

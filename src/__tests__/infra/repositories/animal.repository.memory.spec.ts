@@ -1,7 +1,7 @@
 import { describe, expect, it, beforeEach } from "vitest";
 import { AnimalRepositoryMemory } from "../../../infra/repositories/animal.repository.memory";
 import { Animal } from "../../../domain/animal/entity/animal";
-import { animalFixture, createAnimalFixture } from "../../fixtures/animal";
+import { animalFixture, createAnimalFixture } from "../../_fixtures/animal";
 
 describe("Animal in memory repository", () => {
   let instance: Readonly<AnimalRepositoryMemory>;
@@ -47,14 +47,14 @@ describe("Animal in memory repository", () => {
     expect(animal).toHaveProperty("id", animalFixture.id);
   });
 
-  it("should not find any animals with inexistent id", async () => {
+  it("should not find any animals when id does not exist", async () => {
     const QUANTITY_TO_SAVE = 3;
     Array.from({ length: QUANTITY_TO_SAVE }).forEach(async () => {
       const animal = Animal.create(createAnimalFixture);
       await instance.save(animal);
     });
 
-    const animal = await instance.findById("inexistent_id");
-    expect(animal).toBeNull();
+    const output = await instance.findById("inexistent_id");
+    expect(output).toBeNull();
   });
 });
