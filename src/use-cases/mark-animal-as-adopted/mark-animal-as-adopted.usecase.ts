@@ -1,3 +1,4 @@
+import { inject, injectable } from "tsyringe";
 import { Animal } from "../../domain/animal/entity/animal";
 import { AnimalGateway } from "../../domain/animal/gateway/animal.gateway";
 import { UseCase } from "../use-case";
@@ -8,10 +9,14 @@ export type MarkAnimalAsAdoptedInputDto = {
 
 export type MarkAnimalAsAdoptedOutputDto = Animal | null;
 
+@injectable()
 export class MarkAnimalAsAdoptedUseCase
   implements UseCase<MarkAnimalAsAdoptedInputDto, MarkAnimalAsAdoptedOutputDto>
 {
-  private constructor(private readonly animalGateway: AnimalGateway) {}
+  constructor(
+    @inject("AnimalGateway")
+    private readonly animalGateway: AnimalGateway
+  ) {}
 
   public static create(
     animalGateway: AnimalGateway

@@ -12,6 +12,10 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "dependencies": {
+    "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.8.0"
+  },
   "devDependencies": {
     "@types/node": "^22.10.1",
     "tsx": "^4.19.2",

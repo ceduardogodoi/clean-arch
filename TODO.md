@@ -5,3 +5,4 @@
   - findById
 
 - [ ] Implement dependencies injection with tsyringe
+  - [ ] Inject AnimalGateway with tsyringe in the tests

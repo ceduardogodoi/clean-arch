@@ -1,3 +1,4 @@
+import { inject, injectable } from "tsyringe";
 import { Animal } from "../../domain/animal/entity/animal";
 import { AnimalGateway } from "../../domain/animal/gateway/animal.gateway";
 import { UseCase } from "../use-case";
@@ -13,10 +14,14 @@ type FindAllAnimalsOutputDto = {
   observations?: string;
 }[];
 
+@injectable()
 export class FindAllAnimalsUseCase
   implements UseCase<FindAllAnimalsInputDto, FindAllAnimalsOutputDto>
 {
-  private constructor(private readonly animalGateway: AnimalGateway) {}
+  constructor(
+    @inject("AnimalGateway")
+    private readonly animalGateway: AnimalGateway
+  ) {}
 
   public static create(animalGateway: AnimalGateway): FindAllAnimalsUseCase {
     return new FindAllAnimalsUseCase(animalGateway);
