@@ -2,7 +2,6 @@ import { describe, it, expect, vi } from "vitest";
 import { CreateAnimalUseCase } from "../../../use-cases/create-animal/create-animal.usecase";
 import { AnimalRepositoryMemory } from "../../../infra/repositories/animal.repository.memory";
 import { createAnimalInputDtoFixture } from "../../_fixtures/animal";
-import { Animal } from "../../../domain/animal/entity/animal";
 
 vi.mock("../../../infra/repositories/animal.repository.memory", () => {
   function AnimalRepositoryMemoryFixture(): Partial<AnimalRepositoryMemory> {
